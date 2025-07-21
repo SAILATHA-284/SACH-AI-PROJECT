@@ -3,14 +3,14 @@ import pandas as pd
 from datetime import datetime
 import time
 
-# ✅ Your Twitter Bearer Token
-BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAF1s0gEAAAAAxbp7XznpeR79vIVcAHXYBUSGlG0%3D8qYZ385ai1j6VE1v2bjPRPjIUixqylDfdRZhz9kjGeVWfMDpV6"
+
+BEARER_TOKEN = ""
 
 headers = {
     "Authorization": f"Bearer {BEARER_TOKEN}"
 }
 
-# ✅ Twitter usernames to test
+
 usernames = [
     "nasa", "bhoomeme", "elonmusk", "BarackObama", "cnnbrk", "justinbieber", "imVkohli",
     "katyperry", "KimKardashian", "realDonaldTrump", "umarants", "ItsAmitTrivedi", "TheCinesthetic",
@@ -19,7 +19,7 @@ usernames = [
     "saeegivingup", "ichigoxt"
 ]
 
-# Twitter API endpoint for user info
+
 url = "https://api.twitter.com/2/users/by"
 
 params = {
@@ -27,7 +27,7 @@ params = {
     "user.fields": "created_at,description,verified,profile_image_url,public_metrics"
 }
 
-# Send request to get user data
+
 response = requests.get(url, headers=headers, params=params)
 print("🌐 API status:", response.status_code)
 
@@ -38,7 +38,7 @@ if response.status_code != 200:
 data = response.json()
 rows = []
 
-# Function to get recent tweets of a user
+
 def get_recent_tweets(user_id, max_results=10):
     tweet_url = f"https://api.twitter.com/2/users/{user_id}/tweets"
     tweet_params = {
@@ -51,7 +51,7 @@ def get_recent_tweets(user_id, max_results=10):
         return []
     return tweet_response.json().get("data", [])
 
-# Process each user
+
 for user in data.get("data", []):
     print("✅ Extracting data for:", user.get("username", "N/A"))
     metrics = user.get("public_metrics", {})
@@ -74,7 +74,7 @@ for user in data.get("data", []):
 
     ratio = followers / following if following else 0
 
-    # ➕ Get recent tweet activity
+  
     tweets_data = get_recent_tweets(user_id, max_results=20)
     total_likes = 0
     total_retweets = 0
