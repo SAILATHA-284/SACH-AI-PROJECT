@@ -8,7 +8,7 @@ from dateutil import parser
 from sklearn.preprocessing import StandardScaler
 
 
-BEARER_TOKEN = 
+BEARER_TOKEN = process.env.API_KEY
 
 
 rf_model = joblib.load("fake_account_model.pkl")
