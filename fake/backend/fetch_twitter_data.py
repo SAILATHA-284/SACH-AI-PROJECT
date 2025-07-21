@@ -4,7 +4,7 @@ from datetime import datetime
 import time
 
 
-BEARER_TOKEN = ""
+BEARER_TOKEN = process.env.API_KEY
 
 headers = {
     "Authorization": f"Bearer {BEARER_TOKEN}"
