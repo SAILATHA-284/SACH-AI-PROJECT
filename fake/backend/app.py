@@ -7,22 +7,22 @@ import requests
 from dateutil import parser
 from sklearn.preprocessing import StandardScaler
 
-# ✅ Twitter Bearer Token
+
 BEARER_TOKEN = 
 
-# ✅ Load models
+
 rf_model = joblib.load("fake_account_model.pkl")
 knn_model = joblib.load("knn_fake_account_model.pkl")
 svc_model = joblib.load("linear_svc_fake_account_model.pkl")
 svc_scaler = joblib.load("linear_svc_scaler.pkl")  # Scaler for SVC
 
-# ✅ Initialize Flask app
+
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
 def home():
-    return "✅ Fake Account Detection API with RF, KNN, and SVC is running!"
+    return " Fake Account Detection API with RF, KNN, and SVC is running!"
 
 @app.route('/predict-twitter', methods=['POST'])
 def predict_twitter():
@@ -34,7 +34,7 @@ def predict_twitter():
         if not username:
             return jsonify({'error': 'Username is required'}), 400
 
-        # ✅ Fetch Twitter user data
+      
         headers = {"Authorization": f"Bearer {BEARER_TOKEN}"}
         params = {
             "user.fields": "created_at,description,verified,profile_image_url,public_metrics"
@@ -49,7 +49,7 @@ def predict_twitter():
         if not user:
             return jsonify({'error': 'User not found'}), 404
 
-        # ✅ Extract features
+       
         metrics = user["public_metrics"]
         followers = metrics.get("followers_count", 0)
         following = metrics.get("following_count", 0)
@@ -67,7 +67,7 @@ def predict_twitter():
         features = np.array([[followers, following, tweets, listed, verified,
                               bio_length, has_profile_pic, account_age_days, ratio]])
 
-        # ✅ Model selection
+     
         if model_type == 'random_forest':
             model = rf_model
             prediction = model.predict(features)[0]
